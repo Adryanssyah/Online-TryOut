@@ -38,11 +38,11 @@
         <div class="flex-shrink-0">
           <img
             class="rounded-full w-11 h-11"
-            src="/docs/images/people/profile-picture-1.jpg"
+            src="https://play-lh.googleusercontent.com/60NN6l06lSfCFjJRQog7Vh4JlswDA0p2zF_vRjMlIz7NUwPt_wQlcCNsP7X0c9eZMHk=w240-h480-rw"
             alt="Jese image"
           />
           <div
-            class="absolute flex items-center justify-center w-5 h-5 ml-6 -mt-5 bg-blue-600 border border-white rounded-full dark:border-gray-800"
+            class="absolute flex items-center justify-center w-5 h-5 ml-6 -mt-5 bg-yellow-600 border border-white rounded-full dark:border-gray-800"
           >
             <svg
               class="w-2 h-2 text-white"
@@ -66,14 +66,14 @@
             <span class="font-semibold text-gray-900 dark:text-white">Jese Leos</span>: "Hey, what's
             up? All set for the presentation?"
           </div>
-          <div class="text-xs text-blue-600 dark:text-blue-500">a few moments ago</div>
+          <div class="text-xs text-yellow-600 dark:text-yellow-500">a few moments ago</div>
         </div>
       </a>
       <a href="#" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700">
         <div class="flex-shrink-0">
           <img
             class="rounded-full w-11 h-11"
-            src="/docs/images/people/profile-picture-2.jpg"
+            src="https://play-lh.googleusercontent.com/60NN6l06lSfCFjJRQog7Vh4JlswDA0p2zF_vRjMlIz7NUwPt_wQlcCNsP7X0c9eZMHk=w240-h480-rw"
             alt="Joseph image"
           />
           <div
@@ -98,14 +98,14 @@
             <span class="font-medium text-gray-900 dark:text-white">5 others</span> started
             following you.
           </div>
-          <div class="text-xs text-blue-600 dark:text-blue-500">10 minutes ago</div>
+          <div class="text-xs text-yellow-600 dark:text-yellow-500">10 minutes ago</div>
         </div>
       </a>
       <a href="#" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700">
         <div class="flex-shrink-0">
           <img
             class="rounded-full w-11 h-11"
-            src="/docs/images/people/profile-picture-3.jpg"
+            src="https://play-lh.googleusercontent.com/60NN6l06lSfCFjJRQog7Vh4JlswDA0p2zF_vRjMlIz7NUwPt_wQlcCNsP7X0c9eZMHk=w240-h480-rw"
             alt="Bonnie image"
           />
           <div
@@ -130,14 +130,14 @@
             <span class="font-medium text-gray-900 dark:text-white">141 others</span> love your
             story. See it and view more stories.
           </div>
-          <div class="text-xs text-blue-600 dark:text-blue-500">44 minutes ago</div>
+          <div class="text-xs text-yellow-600 dark:text-yellow-500">44 minutes ago</div>
         </div>
       </a>
       <a href="#" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700">
         <div class="flex-shrink-0">
           <img
             class="rounded-full w-11 h-11"
-            src="/docs/images/people/profile-picture-4.jpg"
+            src="https://play-lh.googleusercontent.com/60NN6l06lSfCFjJRQog7Vh4JlswDA0p2zF_vRjMlIz7NUwPt_wQlcCNsP7X0c9eZMHk=w240-h480-rw"
             alt="Leslie image"
           />
           <div
@@ -160,16 +160,16 @@
           <div class="text-gray-500 text-sm mb-1.5 dark:text-gray-400">
             <span class="font-semibold text-gray-900 dark:text-white">Leslie Livingston</span>
             mentioned you in a comment:
-            <span class="font-medium text-blue-500" href="#">@bonnie.green</span> what do you say?
+            <span class="font-medium text-yellow-500" href="#">@bonnie.green</span> what do you say?
           </div>
-          <div class="text-xs text-blue-600 dark:text-blue-500">1 hour ago</div>
+          <div class="text-xs text-yellow-600 dark:text-yellow-500">1 hour ago</div>
         </div>
       </a>
       <a href="#" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700">
         <div class="flex-shrink-0">
           <img
             class="rounded-full w-11 h-11"
-            src="/docs/images/people/profile-picture-5.jpg"
+            src="https://play-lh.googleusercontent.com/60NN6l06lSfCFjJRQog7Vh4JlswDA0p2zF_vRjMlIz7NUwPt_wQlcCNsP7X0c9eZMHk=w240-h480-rw"
             alt="Robert image"
           />
           <div
@@ -193,7 +193,7 @@
             <span class="font-semibold text-gray-900 dark:text-white">Robert Brown</span> posted a
             new video: Glassmorphism - learn how to implement the new design trend.
           </div>
-          <div class="text-xs text-blue-600 dark:text-blue-500">3 hours ago</div>
+          <div class="text-xs text-yellow-600 dark:text-yellow-500">3 hours ago</div>
         </div>
       </a>
     </div>

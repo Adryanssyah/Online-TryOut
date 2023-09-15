@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     checkRoute() {
-      if (this.$route.name === 'Dashboard') {
+      if (this.$route.meta.auth) {
         this.isLogin = true
         return
       }

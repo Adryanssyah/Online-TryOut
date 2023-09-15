@@ -1,6 +1,6 @@
 <template lang="">
   <div class="py-6 px-4 mx-auto max-w-screen-xl">
-    <h1 class="font-bold text-3xl my-5">
+    <h1 class="font-bold text-4xl my-5">
       Paket
       <span class="text-transparent bg-clip-text bg-gradient-to-r to-yellow-400 from-orange-400"
         >Try Out</span
@@ -52,6 +52,7 @@
 </template>
 <script>
 import PricingCard from '../components/landingPage/PricingCard.vue'
+import { useScrollToTop } from '@/composables/scrollToTop'
 export default {
   name: 'PacketList',
   components: {
@@ -66,6 +67,10 @@ export default {
         { title: 'SNBT 2024', harga: 120000 }
       ]
     }
+  },
+  mounted() {
+    const { scrollToTop } = useScrollToTop()
+    scrollToTop()
   }
 }
 </script>

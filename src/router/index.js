@@ -4,6 +4,7 @@ import Login from '../views/Login.vue'
 import Regis from '../views/Regis.vue'
 import Dashboard from '../views/Dashboard.vue'
 import PacketList from '../views/PacketList.vue'
+import Profile from '../views/Profile.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,6 +15,7 @@ const router = createRouter({
       component: landingPage,
       meta: {
         title: 'Try Out Online - CPNS PPPK SNBT'
+        // auth: false
       }
     },
     {
@@ -22,7 +24,7 @@ const router = createRouter({
       component: Login,
       meta: {
         title: 'Login - Try Out Online CPNS PPPK SNBT',
-        authPage: true
+        auth: false
       }
     },
     {
@@ -31,7 +33,7 @@ const router = createRouter({
       component: Regis,
       meta: {
         title: 'Daftar - Try Out Online CPNS PPPK SNBT',
-        authPage: true
+        auth: false
       }
     },
     {
@@ -39,7 +41,8 @@ const router = createRouter({
       name: 'PacketList',
       component: PacketList,
       meta: {
-        title: 'Pilih Paket - Try Out Online CPNS PPPK SNBT'
+        title: 'Pilih Paket - Try Out Online CPNS PPPK SNBT',
+        auth: true
       }
     },
     {
@@ -47,7 +50,17 @@ const router = createRouter({
       name: 'Dashboard',
       component: Dashboard,
       meta: {
-        title: 'Dashboard - Try Out Online CPNS PPPK SNBT'
+        title: 'Dashboard - Try Out Online CPNS PPPK SNBT',
+        auth: true
+      }
+    },
+    {
+      path: '/profil',
+      name: 'Profile',
+      component: Profile,
+      meta: {
+        title: 'Profile Pengguna ',
+        auth: true
       }
     }
   ]
