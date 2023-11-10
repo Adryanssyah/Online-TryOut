@@ -5,7 +5,6 @@ import App from './App.vue'
 import router from './router'
 import './index.css'
 
-axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL
 const app = createApp(App)
 
 app.use(createPinia())
