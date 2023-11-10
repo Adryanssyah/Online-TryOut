@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     checkRoute() {
-      if (this.$route.name === 'Login' || this.$route.name === 'Regis') {
+      if (this.$route.meta.authPage || this.$route.name === 'Exam') {
         this.authPage = true
         return
       }

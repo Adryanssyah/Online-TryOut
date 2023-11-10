@@ -5,6 +5,7 @@ import Regis from '../views/Regis.vue'
 import Dashboard from '../views/Dashboard.vue'
 import PacketList from '../views/PacketList.vue'
 import Profile from '../views/Profile.vue'
+import Exam from '../views/Exam.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,7 +25,8 @@ const router = createRouter({
       component: Login,
       meta: {
         title: 'Login - Try Out Online CPNS PPPK SNBT',
-        auth: false
+        auth: false,
+        authPage: true
       }
     },
     {
@@ -33,7 +35,8 @@ const router = createRouter({
       component: Regis,
       meta: {
         title: 'Daftar - Try Out Online CPNS PPPK SNBT',
-        auth: false
+        auth: false,
+        authPage: true
       }
     },
     {
@@ -59,7 +62,16 @@ const router = createRouter({
       name: 'Profile',
       component: Profile,
       meta: {
-        title: 'Profile Pengguna ',
+        title: 'Profile Pengguna',
+        auth: true
+      }
+    },
+    {
+      path: '/ujian',
+      name: 'Exam',
+      component: Exam,
+      meta: {
+        title: 'Ujian',
         auth: true
       }
     }

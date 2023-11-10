@@ -1,0 +1,74 @@
+[
+  {
+    "id": "soal1",
+    "answers": [
+      "The English Patient",
+      "The Metamorphosis",
+      "The Moviegoer",
+      "Native Son",
+      "Silent Patient"
+    ],
+    "question": "Ini adalah soal nomor 1",
+    "status": "empty"
+  },
+  {
+    "id": "soal2",
+    "answers": [
+      "The English Patient",
+      "The Metamorphosis",
+      "The Moviegoer",
+      "Native Son",
+      "Silent Patient"
+    ],
+    "question": "Ini adalah soal nomor 2",
+    "status": "filled"
+  },
+  {
+    "id": "soal3",
+    "answers": [
+      "The English Patient",
+      "The Metamorphosis",
+      "The Moviegoer",
+      "Native Son",
+      "Silent Patient"
+    ],
+    "question": "Ini adalah soal nomor 3",
+    "status": "doubt"
+  },
+  {
+    "id": "soal4",
+    "answers": [
+      "The English Patient",
+      "The Metamorphosis",
+      "The Moviegoer",
+      "Native Son",
+      "Silent Patient"
+    ],
+    "question": "Ini adalah soal nomor 4",
+    "status": "empty"
+  },
+  {
+    "id": "soal5",
+    "answers": [
+      "The English Patient",
+      "The Metamorphosis",
+      "The Moviegoer",
+      "Native Son",
+      "Silent Patient"
+    ],
+    "question": "Ini adalah soal nomor 5",
+    "status": "filled"
+  },
+  {
+    "id": "soal6",
+    "answers": [
+      "The English Patient",
+      "The Metamorphosis",
+      "The Moviegoer",
+      "Native Son",
+      "Silent Patient"
+    ],
+    "question": "Ini adalah soal nomor 6",
+    "status": "empty"
+  }
+]
