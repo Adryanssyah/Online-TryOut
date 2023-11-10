@@ -1,6 +1,6 @@
 <template lang="">
   <Navbar v-if="!authPage" />
-  <div class="font-poppins" :class="{ 'mt-[71px]': !authPage }"><router-view /></div>
+  <div class="font-poppins" :class="{ 'mt-[111px]': !authPage }"><router-view /></div>
   <Footer v-if="!authPage" />
 </template>
 <script>

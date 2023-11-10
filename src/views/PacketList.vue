@@ -51,7 +51,7 @@
   </div>
 </template>
 <script>
-import PricingCard from '../components/landingPage/PricingCard.vue'
+import PricingCard from '@/components/landingPage/PricingCard.vue'
 import { useScrollToTop } from '@/composables/scrollToTop'
 export default {
   name: 'PacketList',
