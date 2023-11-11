@@ -27,7 +27,6 @@
                 name="email"
                 type="email"
                 autocomplete="email"
-                required
                 v-model="loginData.email"
                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-600 sm:text-sm sm:leading-6"
                 :class="{ 'ring-red-500': errors.email }"
@@ -42,21 +41,19 @@
                 >Password</label
               >
               <div class="text-sm">
-                <a href="#" class="font-semibold text-yellow-600 hover:text-yellow-500"
-                  >Lupa password?</a
+                <div
+                  @click="toggleAlert"
+                  class="font-semibold text-yellow-600 hover:text-yellow-500"
                 >
+                  Lupa password?
+                </div>
               </div>
             </div>
-            <div class="mt-2">
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autocomplete="current-password"
-                required
+            <div class="mt-2 relative">
+              <passwordInput
                 v-model="loginData.password"
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-600 sm:text-sm sm:leading-6"
                 :class="{ 'ring-red-500': errors.password }"
+                name="password"
               />
               <p v-if="errors.password" class="text-xs text-red-500">{{ errors.password[0] }}</p>
             </div>
@@ -66,7 +63,7 @@
             <button
               type="submit"
               :disabled="isLoading"
-              :class="{ 'cursor-not-allowed bg-opacity-50 ': isLoading }"
+              :class="{ 'cursor-not-allowed bg-opacity-50 hover:bg-opacity-50': isLoading }"
               class="flex w-full justify-center rounded-md bg-yellow-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-yellow-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
             >
               {{ isLoading ? 'Loading...' : 'Masuk' }}
@@ -88,8 +85,12 @@
 </template>
 <script>
 import getRequest from '@/composables/API/request.js'
+import passwordInput from '@/components/Forms/Password.vue'
 export default {
   name: 'Login',
+  components: {
+    passwordInput
+  },
   data() {
     return {
       isLoading: false,
@@ -105,10 +106,20 @@ export default {
       this.isLoading = true
       this.errors = {}
       const response = await getRequest(this.loginData)
-      response.data.errors ? (this.errors = response.data.errors) : console.log(response)
+      if (response.code === 'ERR_NETWORK') {
+        this.$emit('toggleAlert', { type: 'gagal', message: 'Login Gagal!' })
+        this.isLoading = false
+      }
+
+      response.data.errors
+        ? (this.errors = response.data.errors)
+        : this.$emit('toggleAlert', { type: 'berhasil', message: 'Login Berhasil!' })
+
       this.isLoading = false
+    },
+    toggleAlert() {
+      this.$emit('toggleAlert', { type: 'gagal', message: 'Maaf sedang terjadi gangguan!' })
     }
   }
 }
 </script>
-<style lang=""></style>
