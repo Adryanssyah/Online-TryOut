@@ -7,10 +7,17 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import './index.css'
 
 import axios from 'axios'
+import sessionCheck from '@/composables/Auth/sessionCheck'
 axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL
+
 const app = createApp(App)
-
 app.use(createPinia())
-app.use(router)
+const { check } = sessionCheck()
 
-app.mount('#app')
+async function startApp() {
+  await check()
+  app.use(router)
+  app.mount('#app')
+}
+
+startApp()

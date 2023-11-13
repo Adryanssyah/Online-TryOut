@@ -3,11 +3,13 @@ import landingPage from '@/views/landingPage.vue'
 import Login from '@/views/Login.vue'
 import Regis from '@/views/Regis.vue'
 import Dashboard from '@/views/Dashboard.vue'
-import PacketList from '@/views/PacketList.vue'
+import PackageList from '@/views/PackageList.vue'
 import Profile from '@/views/Profile.vue'
 import Exam from '@/views/Exam.vue'
 //
-import AddPacket from '@/views/Admin/AddPacket.vue'
+import AddPackage from '@/views/Admin/AddPackage.vue'
+
+import { useUserStore } from '@/stores/User'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -42,8 +44,8 @@ const router = createRouter({
     },
     {
       path: '/pilih-paket',
-      name: 'PacketList',
-      component: PacketList,
+      name: 'PackageList',
+      component: PackageList,
       meta: {
         title: 'Pilih Paket - Try Out Online CPNS PPPK SNBT',
         auth: true
@@ -78,8 +80,8 @@ const router = createRouter({
     },
     {
       path: '/kelola-paket',
-      name: 'addPacket',
-      component: AddPacket,
+      name: 'AddPackage',
+      component: AddPackage,
       meta: {
         title: 'Paket Tryout',
         auth: true
@@ -88,9 +90,31 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
+  const userStore = useUserStore()
+
+  if (to.meta.auth) {
+    if (userStore.isAuthenticated) {
+      next()
+    } else {
+      next({
+        name: 'Login'
+      })
+    }
+  }
+
+  if (to.meta.authPage) {
+    if (!userStore.isAuthenticated) {
+      next()
+    } else {
+      next(from)
+    }
+  }
+
+  if (to.name === 'landingPage') {
+    next()
+  }
   document.title = `${to.meta.title}`
-  next()
 })
 
 export default router

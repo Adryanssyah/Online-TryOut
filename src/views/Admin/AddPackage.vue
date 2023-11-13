@@ -88,12 +88,12 @@
     </button>
   </div>
 
-  <div class="grid grid-cols-3 gap-5">
+  <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-5">
     <Card v-for="index in 10" :key="index" />
   </div>
 </template>
 <script>
-import Card from '@/components/Cards/Packet.vue'
+import Card from '@/components/Cards/Package.vue'
 export default {
   components: {
     Card

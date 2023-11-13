@@ -44,11 +44,12 @@
           >
         </li>
         <li>
-          <a
-            href="#"
-            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-            >Keluar</a
+          <div
+            @click="logout"
+            class="block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
           >
+            Keluar
+          </div>
         </li>
       </ul>
     </div>
@@ -62,9 +63,36 @@ onMounted(() => {
   initFlowbite()
 })
 </script>
+
 <script>
+import axios from 'axios'
+import { useUserStore } from '@/stores/User'
 export default {
-  name: 'ProfileToggle'
+  data() {
+    return {}
+  },
+  methods: {
+    async logout() {
+      const userStore = useUserStore()
+      await axios
+        .request({
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('tryoutkuToken').split('|')[1]}`
+          },
+          method: 'POST',
+          url: `logout`
+        })
+        .then((response) => {
+          console.log(response)
+          if (response.data.success) {
+            userStore.$reset()
+            this.$router.push({ name: 'Login' })
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+  }
 }
 </script>
-<style lang=""></style>

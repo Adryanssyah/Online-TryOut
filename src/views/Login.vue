@@ -55,8 +55,6 @@
           </div>
         </form>
 
-        <button @click="logout">Logout</button>
-
         <p class="mt-10 text-center text-sm text-gray-500">
           Belum mendaftar?
           <router-link
@@ -71,8 +69,8 @@
 </template>
 <script>
 import postRequest from '@/composables/API/POST'
-import getRequest from '@/composables/API/GET'
 import passwordInput from '@/components/Forms/Password.vue'
+import { useUserStore } from '@/stores/User'
 export default {
   name: 'Login',
   components: {
@@ -95,20 +93,31 @@ export default {
       const response = await postRequest('login', this.loginData)
       console.log(response.data)
       if (response.code === 'ERR_NETWORK') {
-        this.isLoading = false
         this.$emit('toggleAlert', { type: 'gagal', message: 'Maaf sedang terjadi gangguan!' })
-      } else if (response.data.errors) {
-        this.isLoading = false
+      } else if (response.data.errors || !response.data.success) {
         this.errors = response.data.errors
       } else {
-        this.isLoading = false
+        await this.updateStore(response.data.data)
+        this.storeTokenToLocalStorage(response.data.data.session_token)
         this.$router.push({ name: 'Dashboard' })
       }
+      this.isLoading = false
     },
 
-    async logout() {
-      const response = await postRequest('logout', '')
-      console.log(response)
+    async updateStore(userData) {
+      const userStore = useUserStore()
+      userStore.isAuthenticated = true
+      userStore.user = userData
+    },
+
+    storeTokenToLocalStorage(token) {
+      localStorage.setItem('tryoutkuToken', token)
+    }
+  },
+
+  watch: {
+    'errors.password': function (newValue, oldValue) {
+      this.loginData.password = ''
     }
   }
 }

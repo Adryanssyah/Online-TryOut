@@ -6,7 +6,7 @@
   >
     <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
       <ul class="space-y-2 font-medium">
-        <li v-for="(menu, index) in menuAdmin" :key="index">
+        <li v-for="(menu, index) in menus" :key="index">
           <router-link
             :to="{ name: menu.link }"
             exact-active-class="bg-yellow-500 text-white hover:bg-yellow-800"
@@ -22,6 +22,7 @@
 </template>
 
 <script setup>
+import { useUserStore } from '@/stores/User'
 import { onMounted } from 'vue'
 import { initFlowbite } from 'flowbite'
 
@@ -29,8 +30,17 @@ onMounted(() => {
   initFlowbite()
 })
 
-const menuAdmin = [
+const adminMenus = [
   { icon: 'bi bi-bar-chart-fill', name: 'Dashboard', link: 'Dashboard' },
-  { icon: 'bi bi-folder-plus', name: 'Paket', link: 'addPacket' }
+  { icon: 'bi bi-folder-plus', name: 'Paket', link: 'AddPackage' }
 ]
+const participanMenus = [
+  { icon: 'bi bi-bar-chart-fill', name: 'Dashboard', link: 'Dashboard' },
+  { icon: 'bi bi-pc-display-horizontal', name: 'Try Out', link: 'Exam' }
+]
+
+const userStore = useUserStore()
+
+let menus = []
+if (userStore.user) userStore.user.level_id === 1 ? (menus = adminMenus) : (menus = participanMenus)
 </script>

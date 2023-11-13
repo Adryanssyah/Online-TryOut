@@ -36,11 +36,7 @@
     <div class="divide-y divide-gray-100 dark:divide-gray-700">
       <a href="#" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700">
         <div class="flex-shrink-0">
-          <img
-            class="rounded-full w-11 h-11"
-            src="https://play-lh.googleusercontent.com/60NN6l06lSfCFjJRQog7Vh4JlswDA0p2zF_vRjMlIz7NUwPt_wQlcCNsP7X0c9eZMHk=w240-h480-rw"
-            alt="Jese image"
-          />
+          <img class="rounded-full w-11 h-11" src="" alt="Jese image" />
           <div
             class="absolute flex items-center justify-center w-5 h-5 ml-6 -mt-5 bg-yellow-600 border border-white rounded-full dark:border-gray-800"
           >

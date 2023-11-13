@@ -54,10 +54,11 @@ onMounted(() => {
 </script>
 
 <script>
-import AuthButton from './NotLogin/AuthButton.vue'
-import ProfileToggle from './Login/ProfileToggle.vue'
-import Notifications from './Login/Notifications.vue'
-import Menu from './Menu.vue'
+import { useUserStore } from '@/stores/User'
+import AuthButton from '@/components/Landing/Navbar/NotLogin/AuthButton.vue'
+import ProfileToggle from '@/components/Navigation/ProfileToggle.vue'
+import Notifications from '@/components/Landing/Navbar/Login/Notifications.vue'
+import Menu from '@/components/Landing/Navbar/Menu.vue'
 export default {
   components: {
     AuthButton,
@@ -83,6 +84,10 @@ export default {
     $route() {
       this.checkRoute()
     }
+  },
+  mounted() {
+    const userStore = useUserStore()
+    this.isLogin = userStore.isAuthenticated
   }
 }
 </script>

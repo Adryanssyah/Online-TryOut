@@ -54,7 +54,7 @@
 import PricingCard from '@/components/Landing/PricingCard.vue'
 import { useScrollToTop } from '@/composables/scrollToTop'
 export default {
-  name: 'PacketList',
+  name: 'PackageList',
   components: {
     PricingCard
   },
