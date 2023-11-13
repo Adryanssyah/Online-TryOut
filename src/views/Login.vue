@@ -17,23 +17,13 @@
 
       <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form class="space-y-6" @submit.prevent="Login">
-          <div>
-            <label for="email" class="block text-sm font-medium leading-6 text-gray-900"
-              >Alamat email</label
-            >
-            <div class="mt-2">
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autocomplete="email"
-                v-model="loginData.email"
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-600 sm:text-sm sm:leading-6"
-                :class="{ 'ring-red-500': errors.email }"
-              />
-              <p v-if="errors.email" class="text-xs text-red-500">{{ errors.email[0] }}</p>
-            </div>
-          </div>
+          <textInput
+            :label="'Email'"
+            :id="'email'"
+            v-model="loginData.email"
+            type="email"
+            :error="errors.email ? errors.email[0] : ''"
+          />
 
           <passwordInput
             v-model="loginData.password"
@@ -69,12 +59,14 @@
 </template>
 <script>
 import postRequest from '@/composables/API/POST'
+import textInput from '@/components/Forms/Text.vue'
 import passwordInput from '@/components/Forms/Password.vue'
 import { useUserStore } from '@/stores/User'
 export default {
   name: 'Login',
   components: {
-    passwordInput
+    passwordInput,
+    textInput
   },
   data() {
     return {

@@ -32,7 +32,7 @@ onMounted(() => {
 
 const adminMenus = [
   { icon: 'bi bi-bar-chart-fill', name: 'Dashboard', link: 'Dashboard' },
-  { icon: 'bi bi-folder-plus', name: 'Paket', link: 'AddPackage' }
+  { icon: 'bi bi-folder-plus', name: 'Paket', link: 'AddPackageType' }
 ]
 const participanMenus = [
   { icon: 'bi bi-bar-chart-fill', name: 'Dashboard', link: 'Dashboard' },

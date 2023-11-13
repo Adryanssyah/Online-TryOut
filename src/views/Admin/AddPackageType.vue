@@ -74,7 +74,7 @@
     Tipe Paket
   </h1>
 
-  <div class="mb-6 flex w-full justify-between">
+  <div class="mb-6 flex w-full justify-between flex-col lg:flex-row gap-5">
     <input
       type="text"
       class="bg-gray-50 border border-gray-300 text-gray-900 min-w-[350px] text-sm rounded-lg focus:ring-yellow-500 focus:border-yellow-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-yellow-500 dark:focus:border-yellow-500"
@@ -82,22 +82,33 @@
     />
     <button
       type="button"
-      class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-yellow-500 rounded-lg hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800"
+      @click="toggleModalAddPackageShow"
+      class="items-center px-3 py-2 text-sm font-medium text-center text-white bg-yellow-500 rounded-lg hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800"
     >
-      Tambah Tipe Paket
+      Tambah
     </button>
   </div>
-
-  <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-5">
-    <Card v-for="index in 10" :key="index" />
-  </div>
+  <PackageTypeList />
+  <ModalAddPackageType :modalShow="modalPackageTypeShow" @close="toggleModalAddPackageShow" />
 </template>
 <script>
-import Card from '@/components/Cards/Package.vue'
+import ModalAddPackageType from '@/components/Modals/AddPackageTypeModal.vue'
+import PackageTypeList from '@/components/Page/PackageTypeList.vue'
 export default {
-  components: {
-    Card
+  name: 'Dashboard',
+  data() {
+    return {
+      modalPackageTypeShow: false
+    }
   },
-  name: 'Dashboard'
+  components: {
+    ModalAddPackageType,
+    PackageTypeList
+  },
+  methods: {
+    toggleModalAddPackageShow() {
+      this.modalPackageTypeShow = !this.modalPackageTypeShow
+    }
+  }
 }
 </script>

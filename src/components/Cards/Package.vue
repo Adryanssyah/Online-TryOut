@@ -1,40 +1,26 @@
 <template lang="">
-  <div
-    class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+  <a
+    href="#"
+    class="p-6 group bg-white border border-gray-200 rounded-lg lg:hover:shadow-lg cursor-pointer duration-150 lg:hover:translate-x-1 lg:hover:-translate-y-1 shadow dark:bg-gray-800 dark:border-gray-700"
   >
-    <a href="#">
-      <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-        Paket CPNS 2023
-      </h5>
-    </a>
-    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-      Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse
-      chronological order.
-    </p>
-    <a
-      href="#"
-      class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-yellow-500 rounded-lg hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800"
-    >
-      Kelola
-      <svg
-        class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 14 10"
+    <div class="flex justify-between items-center gap w-full">
+      <h5
+        class="text-2xl truncate font-bold tracking-tight text-gray-900 group-hover:text-yellow-500 dark:text-white"
       >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M1 5h12m0 0L9 1m4 4L9 9"
-        />
-      </svg>
-    </a>
-  </div>
+        {{ package.package_type_name }}
+      </h5>
+
+      <i class="bi bi-chevron-right group-hover:text-yellow-500"></i>
+    </div>
+  </a>
 </template>
 <script>
-export default {}
+export default {
+  props: {
+    package: {
+      type: Object
+    }
+  }
+}
 </script>
 <style lang=""></style>
