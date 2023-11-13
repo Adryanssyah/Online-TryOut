@@ -30,7 +30,7 @@
       </svg>
       <span class="sr-only">Info</span>
       <div>
-        <span class="font-medium capitalize">{{ floatAlert.type }}</span> {{ floatAlert.message }}
+        <span class="font-medium capitalize">{{ floatAlert.type }}!</span> {{ floatAlert.message }}
       </div>
     </div>
   </transition>
@@ -42,7 +42,7 @@ export default {
   },
   data() {
     return {
-      duration: 1500
+      duration: 2300
     }
   },
   watch: {

@@ -107,11 +107,10 @@
   </section>
 </template>
 <script>
-import Carousel from '../Carousel.vue'
+import Carousel from '@/components/Carousel.vue'
 export default {
   components: {
     Carousel
   }
 }
 </script>
-<style lang=""></style>

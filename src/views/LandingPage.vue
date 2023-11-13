@@ -1,5 +1,6 @@
 <template lang="">
-  <div>
+  <div class="pt-[71px]">
+    <Navbar />
     <Jumbotron></Jumbotron>
     <Promo1></Promo1>
     <div class="py-6 px-4 mx-auto max-w-screen-xl">
@@ -23,23 +24,26 @@
         >
       </div>
     </div>
-
     <Accordion />
+    <Footer />
   </div>
 </template>
 <script>
-import Jumbotron from '../components/landingPage/Jumbotron.vue'
-import PricingCard from '../components/landingPage/PricingCard.vue'
-import Promo1 from '../components/landingPage/Promo1.vue'
-import Accordion from '../components/landingPage/Accordion.vue'
-
+import Navbar from '@/components/Landing/Navbar/Navbar.vue'
+import Jumbotron from '@/components/Landing/Jumbotron.vue'
+import PricingCard from '@/components/Landing/PricingCard.vue'
+import Promo1 from '@/components/Landing/Promo1.vue'
+import Accordion from '@/components/Landing/Accordion.vue'
+import Footer from '@/components/Navigation/Footer.vue'
 export default {
   name: 'landingPage',
   components: {
+    Navbar,
     Jumbotron,
     PricingCard,
     Promo1,
-    Accordion
+    Accordion,
+    Footer
   },
   data() {
     return {

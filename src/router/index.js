@@ -1,11 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import landingPage from '../views/landingPage.vue'
-import Login from '../views/Login.vue'
-import Regis from '../views/Regis.vue'
-import Dashboard from '../views/Dashboard.vue'
-import PacketList from '../views/PacketList.vue'
-import Profile from '../views/Profile.vue'
-import Exam from '../views/Exam.vue'
+import landingPage from '@/views/landingPage.vue'
+import Login from '@/views/Login.vue'
+import Regis from '@/views/Regis.vue'
+import Dashboard from '@/views/Dashboard.vue'
+import PacketList from '@/views/PacketList.vue'
+import Profile from '@/views/Profile.vue'
+import Exam from '@/views/Exam.vue'
+//
+import AddPacket from '@/views/Admin/AddPacket.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,7 +18,6 @@ const router = createRouter({
       component: landingPage,
       meta: {
         title: 'Try Out Online - CPNS PPPK SNBT'
-        // auth: false
       }
     },
     {
@@ -72,6 +73,15 @@ const router = createRouter({
       component: Exam,
       meta: {
         title: 'Ujian',
+        auth: true
+      }
+    },
+    {
+      path: '/kelola-paket',
+      name: 'addPacket',
+      component: AddPacket,
+      meta: {
+        title: 'Paket Tryout',
         auth: true
       }
     }

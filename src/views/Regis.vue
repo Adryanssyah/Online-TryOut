@@ -16,97 +16,63 @@
       </div>
 
       <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form class="space-y-6" action="#" method="POST">
-          <div>
-            <label for="email" class="block text-sm font-medium leading-6 text-gray-900"
-              >Nama</label
-            >
-            <div class="mt-2">
-              <input
-                id="name"
-                name="name"
-                type="text"
-                required
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-          <div>
-            <label for="email" class="block text-sm font-medium leading-6 text-gray-900"
-              >Alamat email</label
-            >
-            <div class="mt-2">
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autocomplete="email"
-                required
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-
-          <div>
-            <div class="flex items-center justify-between">
-              <label for="password" class="block text-sm font-medium leading-6 text-gray-900"
-                >Password</label
-              >
-            </div>
-            <div class="mt-2">
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autocomplete="current-password"
-                required
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-
-          <div>
-            <div class="flex items-center justify-between">
-              <label for="password" class="block text-sm font-medium leading-6 text-gray-900"
-                >Konfirmasi Password</label
-              >
-            </div>
-            <div class="mt-2">
-              <input
-                id="konfirmasi-password"
-                name="konfirmasi-password"
-                type="password"
-                autocomplete="current-password"
-                required
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-
-          <div>
-            <div class="flex items-center justify-between">
-              <label for="password" class="block text-sm font-medium leading-6 text-gray-900"
-                >Nomor Handphone</label
-              >
-            </div>
-            <div class="mt-2">
-              <input
-                id="handphone"
-                name="password"
-                type="tel"
-                inputmode="numeric"
-                required
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
+        <form class="space-y-6" @submit.prevent="regis">
+          <textInput
+            :label="'Email'"
+            :id="'email'"
+            v-model="dataRegis.email"
+            type="email"
+            :error="errors.email ? errors.email[0] : ''"
+          />
+          <textInput
+            :label="'Username'"
+            :id="'username'"
+            v-model="dataRegis.username"
+            type="text"
+            :error="errors.username ? errors.username[0] : ''"
+          />
+          <passwordInput
+            :label="'Password'"
+            :id="'password'"
+            v-model="dataRegis.password"
+            :error="errors.password ? errors.password[0] : ''"
+          />
+          <passwordInput
+            :label="'Konfirmasi Password'"
+            :id="'konfirmasi-password'"
+            v-model="konfirmasiPassword"
+            :error="errors.konfirmasiPassword ? errors.konfirmasiPassword : ''"
+          />
+          <textInput
+            :label="'First Name'"
+            :id="'firstname'"
+            v-model="dataRegis.firstname"
+            type="text"
+            :error="errors.firstname ? errors.firstname[0] : ''"
+          />
+          <textInput
+            :label="'Last Name'"
+            :id="'lastname'"
+            v-model="dataRegis.lastname"
+            :error="errors.lastname ? errors.lastname[0] : ''"
+            type="text"
+          />
+          <textInput
+            :label="'Nomor Handphone'"
+            :id="'nohp'"
+            v-model="dataRegis.no_hp"
+            type="tel"
+            :error="errors.no_hp ? errors.no_hp[0] : ''"
+          />
 
           <div>
             <button
               type="submit"
+              :disabled="isLoading"
+              :class="{ 'cursor-not-allowed bg-opacity-50 hover:bg-opacity-50': isLoading }"
               class="flex w-full justify-center rounded-md bg-yellow-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-yellow-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
             >
-              Buat Akun
+              {{ isLoading ? 'Loading...' : 'Buat Akun' }}
             </button>
           </div>
         </form>
@@ -124,8 +90,56 @@
   </div>
 </template>
 <script>
+import textInput from '@/components/Forms/Text.vue'
+import passwordInput from '@/components/Forms/Password.vue'
+import postRequest from '@/composables/API/POST'
 export default {
-  name: 'Regis'
+  name: 'Regis',
+  components: {
+    textInput,
+    passwordInput
+  },
+  data() {
+    return {
+      isLoading: false,
+      dataRegis: {
+        email: '',
+        username: '',
+        password: '',
+        firstname: '',
+        lastname: '',
+        no_hp: ''
+      },
+      errors: {},
+      konfirmasiPassword: ''
+    }
+  },
+  methods: {
+    async regis() {
+      this.isLoading = true
+      this.errors = {}
+      const response = await postRequest('registration', this.dataRegis)
+      if (response.code === 'ERR_NETWORK') {
+        this.isLoading = false
+        this.$emit('toggleAlert', { type: 'gagal', message: 'Maaf sedang terjadi gangguan!' })
+      } else if (response.data.errors) {
+        this.isLoading = false
+        this.errors = response.data.errors
+      } else {
+        this.isLoading = false
+        this.$emit('toggleAlert', { type: 'berhasil', message: 'Sukses Silahkan lakukan login!' })
+        this.$router.push({ name: 'Login' })
+      }
+    }
+  },
+
+  watch: {
+    konfirmasiPassword(newValue, oldValue) {
+      newValue != this.dataRegis.password
+        ? (this.errors.konfirmasiPassword = 'Password harus sama')
+        : delete this.errors.konfirmasiPassword
+    }
+  }
 }
 </script>
 <style lang=""></style>

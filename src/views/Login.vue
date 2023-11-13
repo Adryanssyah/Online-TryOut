@@ -35,29 +35,13 @@
             </div>
           </div>
 
-          <div>
-            <div class="flex items-center justify-between">
-              <label for="password" class="block text-sm font-medium leading-6 text-gray-900"
-                >Password</label
-              >
-              <div class="text-sm">
-                <div
-                  @click="toggleAlert"
-                  class="font-semibold text-yellow-600 hover:text-yellow-500"
-                >
-                  Lupa password?
-                </div>
-              </div>
-            </div>
-            <div class="mt-2 relative">
-              <passwordInput
-                v-model="loginData.password"
-                :class="{ 'ring-red-500': errors.password }"
-                name="password"
-              />
-              <p v-if="errors.password" class="text-xs text-red-500">{{ errors.password[0] }}</p>
-            </div>
-          </div>
+          <passwordInput
+            v-model="loginData.password"
+            name="password"
+            :label="'Password'"
+            :id="'id'"
+            :error="errors.password ? errors.password[0] : ''"
+          />
 
           <div>
             <button
@@ -70,6 +54,8 @@
             </button>
           </div>
         </form>
+
+        <button @click="logout">Logout</button>
 
         <p class="mt-10 text-center text-sm text-gray-500">
           Belum mendaftar?
@@ -84,7 +70,8 @@
   </div>
 </template>
 <script>
-import getRequest from '@/composables/API/request.js'
+import postRequest from '@/composables/API/POST'
+import getRequest from '@/composables/API/GET'
 import passwordInput from '@/components/Forms/Password.vue'
 export default {
   name: 'Login',
@@ -105,20 +92,23 @@ export default {
     async Login() {
       this.isLoading = true
       this.errors = {}
-      const response = await getRequest(this.loginData)
+      const response = await postRequest('login', this.loginData)
+      console.log(response.data)
       if (response.code === 'ERR_NETWORK') {
-        this.$emit('toggleAlert', { type: 'gagal', message: 'Login Gagal!' })
         this.isLoading = false
+        this.$emit('toggleAlert', { type: 'gagal', message: 'Maaf sedang terjadi gangguan!' })
+      } else if (response.data.errors) {
+        this.isLoading = false
+        this.errors = response.data.errors
+      } else {
+        this.isLoading = false
+        this.$router.push({ name: 'Dashboard' })
       }
-
-      response.data.errors
-        ? (this.errors = response.data.errors)
-        : this.$emit('toggleAlert', { type: 'berhasil', message: 'Login Berhasil!' })
-
-      this.isLoading = false
     },
-    toggleAlert() {
-      this.$emit('toggleAlert', { type: 'gagal', message: 'Maaf sedang terjadi gangguan!' })
+
+    async logout() {
+      const response = await postRequest('logout', '')
+      console.log(response)
     }
   }
 }
