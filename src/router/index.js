@@ -8,6 +8,7 @@ import Profile from '@/views/Profile.vue'
 import Exam from '@/views/Exam.vue'
 //
 import AddPackageType from '@/views/Admin/AddPackageType.vue'
+import PackageTypeDetail from '@/views/Admin/PackageTypeDetail.vue'
 
 import { useUserStore } from '@/stores/User'
 
@@ -79,13 +80,23 @@ const router = createRouter({
       }
     },
     {
-      path: '/kelola-paket',
+      path: '/tipe-paket',
       name: 'AddPackageType',
       component: AddPackageType,
       meta: {
-        title: 'Paket Tryout',
+        title: 'Tipe Paket',
         auth: true
       }
+    },
+    {
+      path: '/tipe-paket/detail/:id',
+      name: 'PackageTypeDetail',
+      component: PackageTypeDetail,
+      meta: {
+        title: 'Detail Tipe Paket',
+        auth: true
+      },
+      props: true
     }
   ]
 })

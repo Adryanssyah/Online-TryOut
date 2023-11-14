@@ -91,7 +91,8 @@
   <KeepAlive>
     <PackageTypeList ref="packageTypeRef" />
   </KeepAlive>
-  <ModalAddPackageType
+  <ModalPackageType
+    :title="'Tambah'"
     :modalShow="modalPackageTypeShow"
     @reload="triggerReload"
     @close="toggleModalAddPackageShow"
@@ -102,7 +103,7 @@
   </Teleport>
 </template>
 <script>
-import ModalAddPackageType from '@/components/Modals/AddPackageTypeModal.vue'
+import ModalPackageType from '@/components/Modals/PackageTypeModal.vue'
 import PackageTypeList from '@/components/Page/PackageTypeList.vue'
 import floatAlert from '@/components/Alerts/Float.vue'
 export default {
@@ -118,7 +119,7 @@ export default {
     }
   },
   components: {
-    ModalAddPackageType,
+    ModalPackageType,
     PackageTypeList,
     floatAlert
   },
