@@ -88,26 +88,52 @@
       Tambah
     </button>
   </div>
-  <PackageTypeList />
-  <ModalAddPackageType :modalShow="modalPackageTypeShow" @close="toggleModalAddPackageShow" />
+  <KeepAlive>
+    <PackageTypeList ref="packageTypeRef" />
+  </KeepAlive>
+  <ModalAddPackageType
+    :modalShow="modalPackageTypeShow"
+    @reload="triggerReload"
+    @close="toggleModalAddPackageShow"
+    @alert="toggleAlert"
+  />
+  <Teleport to="body">
+    <floatAlert @toggleAlert="toggleAlert" :floatAlert="floatAlert" />
+  </Teleport>
 </template>
 <script>
 import ModalAddPackageType from '@/components/Modals/AddPackageTypeModal.vue'
 import PackageTypeList from '@/components/Page/PackageTypeList.vue'
+import floatAlert from '@/components/Alerts/Float.vue'
 export default {
   name: 'Dashboard',
   data() {
     return {
-      modalPackageTypeShow: false
+      modalPackageTypeShow: false,
+      floatAlert: {
+        visible: false,
+        message: '',
+        type: ''
+      }
     }
   },
   components: {
     ModalAddPackageType,
-    PackageTypeList
+    PackageTypeList,
+    floatAlert
   },
   methods: {
     toggleModalAddPackageShow() {
       this.modalPackageTypeShow = !this.modalPackageTypeShow
+    },
+    triggerReload() {
+      const packageTypeListComponent = this.$refs.packageTypeRef
+      packageTypeListComponent.reloadData()
+    },
+    toggleAlert({ type, message }) {
+      this.floatAlert.visible = !this.floatAlert.visible
+      this.floatAlert.message = message
+      this.floatAlert.type = type
     }
   }
 }

@@ -83,7 +83,6 @@ export default {
       this.isLoading = true
       this.errors = {}
       const response = await postRequest('login', this.loginData)
-      console.log(response.data)
       if (response.code === 'ERR_NETWORK') {
         this.$emit('toggleAlert', { type: 'gagal', message: 'Maaf sedang terjadi gangguan!' })
       } else if (response.data.errors || !response.data.success) {

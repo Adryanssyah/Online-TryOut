@@ -83,7 +83,6 @@ export default {
           url: `logout`
         })
         .then((response) => {
-          console.log(response)
           if (response.data.success) {
             userStore.$reset()
             this.$router.push({ name: 'Login' })

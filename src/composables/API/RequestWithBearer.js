@@ -1,7 +1,11 @@
 import axios from 'axios'
+import { useUserStore } from '@/stores/User'
+
 const requestWithBearer = async (url, method, params) => {
+  const userStore = useUserStore()
   let finalResponse = {}
   if (localStorage.getItem('tryoutkuToken') === null) {
+    userStore.$reset()
     this.$router.push({ name: 'Login' })
   } else {
     await axios
@@ -16,7 +20,7 @@ const requestWithBearer = async (url, method, params) => {
       .then((response) => {
         finalResponse = {
           success: true,
-          data: response
+          data: response.data
         }
       })
       .catch((error) => {

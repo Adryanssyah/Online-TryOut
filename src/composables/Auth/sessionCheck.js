@@ -1,9 +1,8 @@
 import { useUserStore } from '@/stores/User'
 import axios from 'axios'
 
-const storedToken = localStorage.getItem('tryoutkuToken')
-
 const sessionCheck = () => {
+  const storedToken = localStorage.getItem('tryoutkuToken')
   const check = async () => {
     try {
       if (storedToken !== null) {
@@ -12,6 +11,7 @@ const sessionCheck = () => {
         if (response.data.message) {
           userStore.isAuthenticated = true
           userStore.user = response.data.user
+          userStore.user.session_token = storedToken
         } else {
           userStore.$reset()
         }
