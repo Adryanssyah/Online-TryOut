@@ -1,8 +1,11 @@
 <template lang="">
   <div>
-    <label :for="id" v-if="label" class="block text-sm font-medium leading-6 text-gray-900">{{
-      label
-    }}</label>
+    <label
+      :for="id"
+      v-if="label"
+      class="block text-ellipsis whitespace-nowrap text-sm font-medium leading-6 text-gray-900"
+      >{{ label }}</label
+    >
     <div class="mt-2">
       <input
         :id="id"

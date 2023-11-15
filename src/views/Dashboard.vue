@@ -6,8 +6,8 @@
 import Navbar from '@/components/Navigation/Navbar.vue'
 import Sidebar from '@/components/Navigation/Sidebar.vue'
 import Footer from '@/components/Navigation/Footer.vue'
-import DashboardAdmin from '@/components/Dashboard/Admin.vue'
-import DashboardUser from '@/components/Dashboard/User.vue'
+import DashboardAdmin from '@/components/Page/Dashboard/Admin.vue'
+import DashboardUser from '@/components/Page/Dashboard/User.vue'
 import { useUserStore } from '@/stores/User'
 export default {
   components: { Navbar, Sidebar, Footer, DashboardAdmin, DashboardUser },

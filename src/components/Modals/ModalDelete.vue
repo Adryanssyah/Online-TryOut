@@ -21,7 +21,7 @@
         </div>
         <section class="w-full flex justify-between items-center flex-col gap-10">
           <p class="text-center">
-            Yakin ingin menghapus <strong>{{ packageData.packageTypeName }}</strong
+            Yakin ingin menghapus <strong>{{ title }}</strong
             >?
           </p>
           <form @submit.prevent="deleteData" class="py-2 w-full flex justify-center items-center">
@@ -47,7 +47,8 @@ export default {
     modalShow: Boolean,
     title: String,
     pushTo: String,
-    packageData: Object
+    packageData: Object,
+    url: String
   },
   emits: ['close', 'alert', 'push'],
   data() {
@@ -70,18 +71,28 @@ export default {
     },
     async deleteData() {
       this.isLoading = true
-      const response = await requestWithBearer('package-type', 'DELETE', {
+      const response = await requestWithBearer(this.url, 'DELETE', {
         id: this.packageData.id
       })
-      response.success
-        ? (this.$emit('alert', { type: 'berhasil', message: 'berhasil menghapus tipe paket' }),
-          (this.isLoading = false),
-          this.$router.push({ name: this.pushTo }))
-        : (this.$emit('alert', {
-            type: 'gagal',
-            message: 'sepertinya sedang terjadi masalah, coba lagi nanti'
-          }),
-          (this.isLoading = false))
+
+      if (response.success) {
+        if (response.data.success) {
+          this.$emit('alert', { type: 'berhasil', message: response.data.message })
+          this.isLoading = false
+          this.$emit('close')
+          this.$router.push({ name: this.pushTo })
+        } else if (!response.data.success) {
+          this.$emit('alert', { type: 'gagal', message: response.data.message })
+          this.isLoading = false
+          this.$emit('close')
+        }
+      } else if (!response.success) {
+        this.$emit('alert', {
+          type: 'gagal',
+          message: 'sepertinya sedang terjadi masalah, coba lagi nanti'
+        })
+        this.isLoading = false
+      }
     }
   }
 }

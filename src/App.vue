@@ -3,18 +3,20 @@
     <Navbar />
     <Sidebar />
     <div class="p-4 sm:ml-64 mt-16 flex flex-col gap-10 justify-between min-h-screen">
-      <div class="font-poppins">
+      <main>
+        <BreadCrumb />
         <router-view />
-      </div>
+      </main>
       <Footer />
     </div>
   </div>
-  <div v-if="checkRoute" class="font-poppins">
+  <div v-if="checkRoute">
     <router-view @toggleAlert="toggleAlert" />
   </div>
   <floatAlert @toggleAlert="toggleAlert" :floatAlert="floatAlert" />
 </template>
 <script>
+import BreadCrumb from '@/components/Navigation/BreadCrumb.vue'
 import Navbar from '@/components/Navigation/Navbar.vue'
 import Sidebar from '@/components/Navigation/Sidebar.vue'
 import Footer from '@/components/Navigation/Footer.vue'
@@ -25,7 +27,8 @@ export default {
     floatAlert,
     Navbar,
     Sidebar,
-    Footer
+    Footer,
+    BreadCrumb
   },
   computed: {
     checkRoute() {
