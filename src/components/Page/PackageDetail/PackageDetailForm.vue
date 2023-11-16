@@ -7,6 +7,7 @@
       placeholder="E.g. TIU"
       :id="'nama-' + index"
       type="text"
+      :class="'font-bold'"
       v-model="params.package_type_detail_name"
       :error="errors.package_type_detail_name ? errors.package_type_detail_name[0] : ''"
     />
@@ -15,6 +16,8 @@
       placeholder="E.g. 40"
       :id="'pertanyaan-' + index"
       type="text"
+      @keypress="handleInput($event)"
+      :maxlength="3"
       :class="'text-center'"
       v-model="params.question_count"
       :error="errors.question_count ? errors.question_count[0] : ''"
@@ -45,7 +48,11 @@
       :label="'Poin Salah'"
       placeholder="E.g. 0"
       :id="'poin-salah-' + index"
-      type="text"
+      type="number"
+      min="-10"
+      max="10"
+      :maxlength="2"
+      @keypress="handleInput($event)"
       :class="'text-center'"
       v-model="params.incorrect_points_per_question"
       :error="errors.incorrect_points_per_question ? errors.incorrect_points_per_question[0] : ''"
@@ -56,6 +63,8 @@
       :id="'skor-' + index"
       type="text"
       :class="'text-center'"
+      @keypress="handleInput($event)"
+      :maxlength="3"
       v-model="params.min_score"
       :error="errors.min_score ? errors.min_score[0] : ''"
     />
@@ -73,7 +82,7 @@
         type="button"
         v-if="!isLoading"
         @click="deleteSub(index)"
-        class="text-black bg-white border font-bold focus:outline-none hover:bg-gray-200 text-sm focus:ring-4 focus:ring-yellow-200 rounded-lg px-5 py-2.5 me-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+        class="text-black bg-white border font-bold focus:outline-none hover:bg-gray-200 text-sm focus:ring-4 focus:ring-gray-200 rounded-lg px-5 py-2.5 me-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
       >
         <i class="bi bi-x-lg"></i>
       </button>
@@ -117,11 +126,12 @@ export default {
   },
   methods: {
     deleteSub() {
-      if (this.packageTypeDetail.package_type_id !== undefined) {
+      if (this.params.id !== undefined) {
         this.$emit(
           'openModalDelete',
-          { id: this.packageTypeDetail.id },
-          this.packageTypeDetail.package_type_detail_name
+          { id: this.params.id },
+          this.params.package_type_detail_name,
+          this.index
         )
       } else {
         this.$emit('deleteSub', this.index)
@@ -129,7 +139,7 @@ export default {
     },
     handleInput(evt, min = 0, max = 9) {
       const number = parseInt(evt.key)
-      if (!number) {
+      if (evt.keyCode > 57 || evt.keyCode < 48) {
         evt.preventDefault()
       } else if (number > max || number < min) {
         evt.preventDefault()
@@ -144,6 +154,7 @@ export default {
 
       const response = await requestWithBearer('package-type-detail', method, this.params)
       if (response.success && !response.data.errors) {
+        this.params = response.data.data
         this.$emit('alert', { type: 'berhasil', message: 'Berhasil Menyimpan Sub Tipe Paket' })
         this.isLoading = false
       } else if (!response.success) {
@@ -163,8 +174,8 @@ export default {
     if (this.packageTypeDetail.package_type_id !== undefined) {
       this.params = this.packageTypeDetail
     }
+
     this.isLoading = false
   }
 }
 </script>
-<style lang=""></style>

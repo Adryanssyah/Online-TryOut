@@ -44,13 +44,17 @@ import requestWithBearer from '@/composables/API/RequestWithBearer'
 
 export default {
   props: {
+    index: {
+      type: Number,
+      default: null
+    },
     modalShow: Boolean,
     title: String,
     pushTo: String,
-    packageData: Object,
+    packageData: [Object, String],
     url: String
   },
-  emits: ['close', 'alert', 'push'],
+  emits: ['close', 'alert', 'push', 'delete'],
   data() {
     return {
       isLoading: false
@@ -80,6 +84,9 @@ export default {
           this.$emit('alert', { type: 'berhasil', message: response.data.message })
           this.isLoading = false
           this.$emit('close')
+          if (this.index !== null) {
+            this.$emit('delete', this.index)
+          }
           this.$router.push({ name: this.pushTo })
         } else if (!response.data.success) {
           this.$emit('alert', { type: 'gagal', message: response.data.message })
