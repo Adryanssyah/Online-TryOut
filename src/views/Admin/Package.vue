@@ -20,6 +20,8 @@
     </button>
   </div>
 
+  <PackageList />
+
   <ModalAddPackage
     :title="'Tambah Paket'"
     :modalShow="modalPackageTypeShow"
@@ -33,6 +35,7 @@
 <script>
 import ModalAddPackage from '@/components/Modals/AddPackage.vue'
 import floatAlert from '@/components/Alerts/Float.vue'
+import PackageList from '@/components/Page/Package/PackageList.vue'
 export default {
   data() {
     return {
@@ -46,7 +49,8 @@ export default {
   },
   components: {
     ModalAddPackage,
-    floatAlert
+    floatAlert,
+    PackageList
   },
   methods: {
     toggleModalAddPackageShow() {

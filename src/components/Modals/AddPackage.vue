@@ -234,7 +234,7 @@ export default {
     async lihatIsi() {
       this.saveLoading = true
       const response = await requestWithBearer('package', 'POST', this.params)
-      console.log(response)
+
       if (response.success) {
         if (response.data.errors) {
           this.errors = response.data.errors

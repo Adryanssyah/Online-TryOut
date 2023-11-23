@@ -1,4 +1,4 @@
-<template lang="">
+<template>
   <Loader v-if="isLoading" />
   <div v-if="!isLoading" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-5">
     <TransitionGroup
@@ -15,7 +15,7 @@
   <Disturb v-if="!isLoading && error" @reload="getDataPackageType" />
 </template>
 <script>
-import Card from '@/components/Cards/Package.vue'
+import Card from '@/components/Cards/PackageType.vue'
 import requestWithBearer from '@/composables/API/RequestWithBearer'
 import Loader from '@/components/Loader/Spinner.vue'
 import NotFound from '@/components/Error/NotFound.vue'
