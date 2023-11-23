@@ -2,14 +2,14 @@
   <h1
     class="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white"
   >
-    Tipe Paket
+    Paket Try Out
   </h1>
 
   <div class="mb-6 flex w-full justify-between flex-col lg:flex-row gap-5">
     <input
       type="text"
       class="bg-gray-50 border border-gray-300 text-gray-900 min-w-[350px] text-sm rounded-lg focus:ring-yellow-500 focus:border-yellow-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-yellow-500 dark:focus:border-yellow-500"
-      placeholder="Cari Tipe Paket"
+      placeholder="Cari Paket"
     />
     <button
       type="button"
@@ -20,12 +20,9 @@
     </button>
   </div>
 
-  <PackageTypeList ref="packageTypeRef" />
-
-  <ModalPackageType
-    :title="'Tambah'"
+  <ModalAddPackage
+    :title="'Tambah Paket'"
     :modalShow="modalPackageTypeShow"
-    @reload="triggerReload"
     @close="toggleModalAddPackageShow"
     @alert="toggleAlert"
   />
@@ -34,11 +31,9 @@
   </Teleport>
 </template>
 <script>
-import PackageTypeList from '@/components/Page/PackageTypeList.vue'
-import ModalPackageType from '@/components/Modals/PackageTypeModal.vue'
+import ModalAddPackage from '@/components/Modals/AddPackage.vue'
 import floatAlert from '@/components/Alerts/Float.vue'
 export default {
-  name: '',
   data() {
     return {
       modalPackageTypeShow: false,
@@ -50,17 +45,12 @@ export default {
     }
   },
   components: {
-    ModalPackageType,
-    PackageTypeList,
+    ModalAddPackage,
     floatAlert
   },
   methods: {
     toggleModalAddPackageShow() {
       this.modalPackageTypeShow = !this.modalPackageTypeShow
-    },
-    triggerReload() {
-      const packageTypeListComponent = this.$refs.packageTypeRef
-      packageTypeListComponent.reloadData()
     },
     toggleAlert({ type, message }) {
       this.floatAlert.visible = !this.floatAlert.visible

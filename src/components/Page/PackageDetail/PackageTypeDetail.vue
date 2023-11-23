@@ -6,6 +6,7 @@
     <span class="">{{ packageTypeName }} </span>
   </h2>
   <TransitionGroup
+    name="appear"
     enter-from-class="opacity-0 -translate-y-4"
     leave-to-class="opacity-0 -translate-y-4"
     enter-active-class="transition-all duration-300"
@@ -21,15 +22,9 @@
       @openModalDelete="toggleModalDeleteShow"
       @alert="toggleAlert"
     />
-  </TransitionGroup>
-  <Transition
-    enter-from-class="opacity-0 -translate-y-4"
-    leave-to-class="opacity-0 -translate-y-4"
-    enter-active-class="transition-all duration-300"
-    leave-active-class="transition-all duration-300"
-  >
-    <div v-if="packageTypeDetail.length < 5" class="w-full flex justify-center py-5">
+    <div class="w-full flex justify-center py-5" :key="0">
       <button
+        v-if="packageTypeDetail && packageTypeDetail.length < 5"
         type="button"
         @click="addSub"
         class="flex items-center gap-2 justify-center flex-nowrap text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
@@ -38,7 +33,8 @@
         <span>Tambah Sub</span>
       </button>
     </div>
-  </Transition>
+  </TransitionGroup>
+
   <ModalDelete
     :title="packageTypeDetailNameToDelete"
     :packageData="packageTypeDetailIdToDelete"
@@ -62,7 +58,8 @@ export default {
   props: {
     id: { type: Number },
     packageTypeDetail: {
-      type: Array
+      type: Array,
+      default: null
     },
     packageTypeName: { type: String }
   },

@@ -9,6 +9,7 @@ import Exam from '@/views/Exam.vue'
 //
 import AddPackageType from '@/views/Admin/AddPackageType.vue'
 import PackageTypeDetail from '@/views/Admin/PackageTypeDetail.vue'
+import PackageAdmin from '@/views/Admin/Package.vue'
 
 import { useUserStore } from '@/stores/User'
 
@@ -97,6 +98,15 @@ const router = createRouter({
         auth: true
       },
       props: true
+    },
+    {
+      path: '/paket-tryout',
+      name: 'PackageAdmin',
+      component: PackageAdmin,
+      meta: {
+        title: 'Paket Try Out',
+        auth: true
+      }
     }
   ]
 })

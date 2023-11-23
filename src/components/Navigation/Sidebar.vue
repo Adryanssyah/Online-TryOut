@@ -32,7 +32,8 @@ onMounted(() => {
 
 const adminMenus = [
   { icon: 'bi bi-bar-chart-fill', name: 'Dashboard', link: 'Dashboard' },
-  { icon: 'bi bi-folder-plus', name: 'Tipe Paket', link: 'AddPackageType' }
+  { icon: 'bi bi-folder-plus', name: 'Tipe Paket', link: 'AddPackageType' },
+  { icon: 'bi bi-folder-plus', name: 'Paket Try Out', link: 'PackageAdmin' }
 ]
 const participanMenus = [
   { icon: 'bi bi-bar-chart-fill', name: 'Dashboard', link: 'Dashboard' },

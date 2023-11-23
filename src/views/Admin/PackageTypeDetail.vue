@@ -1,5 +1,5 @@
 <template lang="">
-  <main v-if="!isLoading">
+  <main v-if="!isLoading && !error">
     <div class="flex items-end">
       <h1
         class="mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white"
@@ -21,6 +21,7 @@
       :packageTypeDetail="packageTypeDetail"
     />
   </main>
+  <Loader v-if="isLoading" />
   <ModalPackageType
     v-if="!isLoading"
     :title="'Edit'"
@@ -43,6 +44,8 @@
   <Teleport to="body">
     <floatAlert @toggleAlert="toggleAlert" :floatAlert="floatAlert" />
   </Teleport>
+
+  <Disturb v-if="!isLoading && error" @reload="loadData" />
 </template>
 <script>
 import PackageTypeDetail from '@/components/Page/PackageDetail/PackageTypeDetail.vue'
@@ -50,14 +53,17 @@ import ModalPackageType from '@/components/Modals/PackageTypeModal.vue'
 import ModalDelete from '@/components/Modals/ModalDelete.vue'
 import requestWithBearer from '@/composables/API/RequestWithBearer'
 import floatAlert from '@/components/Alerts/Float.vue'
-
+import Loader from '@/components/Loader/Spinner.vue'
+import Disturb from '@/components/Error/Disturb.vue'
 export default {
   props: ['id'],
   components: {
     ModalPackageType,
     floatAlert,
     ModalDelete,
-    PackageTypeDetail
+    PackageTypeDetail,
+    Loader,
+    Disturb
   },
   data() {
     return {
@@ -72,7 +78,8 @@ export default {
         type: ''
       },
       packageTypeName: null,
-      packageTypeDetail: null
+      packageTypeDetail: null,
+      error: false
     }
   },
   methods: {
@@ -88,8 +95,9 @@ export default {
       this.modalDeleteShow = !this.modalDeleteShow
     },
     async loadData() {
+      this.isLoading = true
+      this.error = false
       const response = await requestWithBearer('package-type-show', 'GET', { id: this.id })
-
       response.success
         ? ((this.packageTypeDetail = response.data[0].package_type_detail),
           (this.packageTypeName = response.data[0].package_type_name),
@@ -97,8 +105,10 @@ export default {
             id: response.data[0].id,
             packageTypeName: response.data[0].package_type_name
           }),
+          (this.error = false),
           (this.isLoading = false))
-        : ''
+        : (this.error = true),
+        (this.isLoading = false)
     }
   },
   async mounted() {
