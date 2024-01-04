@@ -114,7 +114,8 @@
           </thead>
           <tbody>
             <tr
-              class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+              class="bg-white dark:bg-gray-800 hover:bg-gray-50"
+              :class="{ 'border-b dark:border-gray-700': key !== newDetailPackageArray.length - 1 }"
               v-for="(value, key) in packageDetailKey"
               :key="key"
             >
@@ -190,7 +191,6 @@ export default {
           (this.isLoading = false),
           this.remapDetailPackage(this.package.package_type.package_type_detail))
         : ((this.error = true), (this.isLoading = false))
-      // console.log(this.package)
     },
 
     remapDetailPackage(array) {
@@ -204,7 +204,6 @@ export default {
           'skor minimal': item.min_score
         }
       })
-      console.table(this.newDetailPackageArray)
     },
     dateFormatToID(dateString) {
       const options = {
