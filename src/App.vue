@@ -15,6 +15,7 @@
   </div>
   <floatAlert @toggleAlert="toggleAlert" :floatAlert="floatAlert" />
 </template>
+
 <script>
 import BreadCrumb from '@/components/Navigation/BreadCrumb.vue'
 import Navbar from '@/components/Navigation/Navbar.vue'

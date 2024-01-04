@@ -1,4 +1,4 @@
-<template lang="">
+<template>
   <main v-if="!isLoading && !error">
     <div class="flex items-end">
       <h1
@@ -111,8 +111,8 @@ export default {
         (this.isLoading = false)
     }
   },
-  async mounted() {
-    await this.loadData()
+  mounted() {
+    this.loadData()
   }
 }
 </script>

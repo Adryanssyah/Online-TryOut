@@ -5,12 +5,7 @@
     Paket Try Out
   </h1>
 
-  <div class="mb-6 flex w-full justify-between flex-col lg:flex-row gap-5">
-    <input
-      type="text"
-      class="bg-gray-50 border border-gray-300 text-gray-900 min-w-[350px] text-sm rounded-lg focus:ring-yellow-500 focus:border-yellow-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-yellow-500 dark:focus:border-yellow-500"
-      placeholder="Cari Paket"
-    />
+  <div class="mb-2 flex w-full justify-end flex-col lg:flex-row gap-5">
     <button
       type="button"
       @click="toggleModalAddPackageShow"

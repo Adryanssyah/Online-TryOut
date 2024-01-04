@@ -10,10 +10,14 @@ import Exam from '@/views/Exam.vue'
 import AddPackageType from '@/views/Admin/AddPackageType.vue'
 import PackageTypeDetail from '@/views/Admin/PackageTypeDetail.vue'
 import PackageAdmin from '@/views/Admin/Package.vue'
+import PackageDetailAdmin from '@/views/Admin/PackageDetail.vue'
 
 import { useUserStore } from '@/stores/User'
 
 const router = createRouter({
+  scrollBehavior(to, from, savedPosition) {
+    return { top: 0 }
+  },
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
@@ -107,6 +111,16 @@ const router = createRouter({
         title: 'Paket Try Out',
         auth: true
       }
+    },
+    {
+      path: '/paket-tryout/detail/:id',
+      name: 'PackageDetailAdmin',
+      component: PackageDetailAdmin,
+      meta: {
+        title: 'Detail Paket',
+        auth: true
+      },
+      props: true
     }
   ]
 })
