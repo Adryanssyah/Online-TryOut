@@ -27,32 +27,21 @@
     :modalShow="modalPackageTypeShow"
     @reload="triggerReload"
     @close="toggleModalAddPackageShow"
-    @alert="toggleAlert"
   />
-  <Teleport to="body">
-    <floatAlert @toggleAlert="toggleAlert" :floatAlert="floatAlert" />
-  </Teleport>
 </template>
 <script>
 import PackageTypeList from '@/components/Page/PackageTypeList.vue'
 import ModalPackageType from '@/components/Modals/PackageTypeModal.vue'
-import floatAlert from '@/components/Alerts/Float.vue'
 export default {
   name: '',
   data() {
     return {
-      modalPackageTypeShow: false,
-      floatAlert: {
-        visible: false,
-        message: '',
-        type: ''
-      }
+      modalPackageTypeShow: false
     }
   },
   components: {
     ModalPackageType,
-    PackageTypeList,
-    floatAlert
+    PackageTypeList
   },
   methods: {
     toggleModalAddPackageShow() {
@@ -61,11 +50,6 @@ export default {
     triggerReload() {
       const packageTypeListComponent = this.$refs.packageTypeRef
       packageTypeListComponent.reloadData()
-    },
-    toggleAlert({ type, message }) {
-      this.floatAlert.visible = !this.floatAlert.visible
-      this.floatAlert.message = message
-      this.floatAlert.type = type
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <section>
-    <form v-if="!isLoading" @submit.prevent="savePackageData">
+    <form v-if="!isLoading" @submit.prevent="editPackageData">
       <section class="w-full grid grid-cols-1 lg:grid-cols-2 gap-5 px-2 pb-2">
         <textInput
           :label="'Nama Paket'"
@@ -133,48 +133,45 @@ import Spinner from '@/components/Loader/Spinner.vue'
 import { useFloatAlertStore } from '@/stores/FloatAlert'
 
 export default {
-  components: { textInput, searchSelect, currencyInput, Radio, Spinner },
+  name: 'EditPackage',
   props: {
-    index: {
-      type: Number,
-      default: null
+    dataToEdit: {
+      type: Object
     }
   },
   emits: ['close', 'loadData'],
-  data: () => ({
-    isLoading: true,
-    saveLoading: false,
-    params: {
-      package_name: null,
-      access_type: null,
-      package_status: '',
-      package_type_id: '',
-      payment_type: '',
-      price: null,
-      discount: null,
-      package_allow_access_count: null,
-      start_date: null,
-      end_date: null
-    },
-    selection: {
-      package_status: {},
-      package_type_id: {},
-      payment_type: {}
-    },
-    layanan: ['Materi', 'Materi + Tryout'],
-    status: [
-      { value: 'O', label: 'Open' },
-      { value: 'C', label: 'Closed' },
-      { value: 'M', label: 'Maintenance' }
-    ],
-    paymentType: [
-      { value: 'P', label: 'Berbayar' },
-      { value: 'F', label: 'Gratis' },
-      { value: 'R', label: 'Terbatas dengan Kode' }
-    ],
-    packageType: [],
-    errors: {}
-  }),
+  data: () => {
+    return {
+      isLoading: true,
+      saveLoading: false,
+      params: {},
+      selection: {
+        package_status: {},
+        package_type_id: {},
+        payment_type: {}
+      },
+      layanan: ['Materi', 'Materi + Tryout'],
+      status: [
+        { value: 'O', label: 'Open' },
+        { value: 'C', label: 'Closed' },
+        { value: 'M', label: 'Maintenance' }
+      ],
+      paymentType: [
+        { value: 'P', label: 'Berbayar' },
+        { value: 'F', label: 'Gratis' },
+        { value: 'R', label: 'Terbatas dengan Kode' }
+      ],
+      packageType: [],
+      errors: {}
+    }
+  },
+  components: {
+    textInput,
+    searchSelect,
+    currencyInput,
+    Radio,
+    Spinner
+  },
   watch: {
     'selection.package_status'(newValue) {
       if (this.selection.package_status && newValue) {
@@ -193,11 +190,35 @@ export default {
     }
   },
 
+  async mounted() {
+    const response = await requestWithBearer('package-type', 'GET', '')
+    if (response.success) {
+      this.packageType = response.data.map((obj) => ({
+        value: obj.id,
+        label: obj.package_type_name
+      }))
+      this.isLoading = false
+    }
+    this.handleSelections()
+  },
   methods: {
-    async savePackageData() {
+    handleSelections() {
+      this.selection.package_status = this.status.find(
+        (obj) => obj.value === this.params.package_status
+      )
+      this.selection.package_type_id = {
+        value: this.params.package_type.id,
+        label: this.params.package_type.package_type_name
+      }
+      this.selection.payment_type = this.paymentType.find(
+        (obj) => obj.value === this.params.payment_type
+      )
+    },
+
+    async editPackageData() {
       this.saveLoading = true
       const { showFloatAlert } = useFloatAlertStore()
-      const response = await requestWithBearer('package', 'POST', this.params)
+      const response = await requestWithBearer('package', 'PUT', this.params)
       if (response.success) {
         if (response.data.errors) {
           this.errors = response.data.errors
@@ -222,15 +243,8 @@ export default {
       }
     }
   },
-  async mounted() {
-    const response = await requestWithBearer('package-type', 'GET', '')
-    if (response.success) {
-      this.packageType = response.data.map((obj) => ({
-        value: obj.id,
-        label: obj.package_type_name
-      }))
-      this.isLoading = false
-    }
+  created() {
+    this.params = this.dataToEdit
   }
 }
 </script>

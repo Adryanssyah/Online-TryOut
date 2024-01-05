@@ -11,9 +11,10 @@
     </div>
   </div>
   <div v-if="checkRoute">
-    <router-view @toggleAlert="toggleAlert" />
+    <router-view />
   </div>
-  <floatAlert @toggleAlert="toggleAlert" :floatAlert="floatAlert" />
+
+  <FloatAlert />
 </template>
 
 <script>
@@ -21,15 +22,16 @@ import BreadCrumb from '@/components/Navigation/BreadCrumb.vue'
 import Navbar from '@/components/Navigation/Navbar.vue'
 import Sidebar from '@/components/Navigation/Sidebar.vue'
 import Footer from '@/components/Navigation/Footer.vue'
-import floatAlert from '@/components/Alerts/Float.vue'
+
+import FloatAlert from '@/components/Alerts/FloatAlert.vue'
 export default {
   name: 'app',
   components: {
-    floatAlert,
     Navbar,
     Sidebar,
     Footer,
-    BreadCrumb
+    BreadCrumb,
+    FloatAlert
   },
   computed: {
     checkRoute() {
@@ -43,19 +45,7 @@ export default {
   },
   data() {
     return {
-      authPage: false,
-      floatAlert: {
-        visible: false,
-        message: '',
-        type: ''
-      }
-    }
-  },
-  methods: {
-    toggleAlert({ type, message }) {
-      this.floatAlert.visible = !this.floatAlert.visible
-      this.floatAlert.message = message
-      this.floatAlert.type = type
+      authPage: false
     }
   }
 }

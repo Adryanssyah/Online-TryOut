@@ -92,6 +92,9 @@
 <script>
 import requestWithBearer from '@/composables/API/RequestWithBearer'
 import inputText from '@/components/Forms/Text.vue'
+
+import { useFloatAlertStore } from '@/stores/FloatAlert'
+
 export default {
   components: {
     inputText
@@ -150,18 +153,15 @@ export default {
       let method = ''
       this.isLoading = true
       this.errors = {}
+      const { showFloatAlert } = useFloatAlertStore()
       this.packageTypeDetail.package_type_id !== undefined ? (method = 'PUT') : (method = 'POST')
-
       const response = await requestWithBearer('package-type-detail', method, this.params)
       if (response.success && !response.data.errors) {
         this.params = response.data.data
-        this.$emit('alert', { type: 'berhasil', message: 'Berhasil Menyimpan Sub Tipe Paket' })
+        showFloatAlert('Berhasil Menyimpan Sub Tipe Paket', 'success')
         this.isLoading = false
       } else if (!response.success) {
-        this.$emit('alert', {
-          type: 'gagal',
-          message: 'sepertinya sedang terjadi masalah, coba lagi nanti'
-        })
+        showFloatAlert('sepertinya sedang terjadi masalah, coba lagi nanti', 'success')
         this.isLoading = false
       }
       if (response.data.errors) {

@@ -48,6 +48,8 @@
 import textInput from '@/components/Forms/Text.vue'
 import requestWithBearer from '@/composables/API/RequestWithBearer'
 
+import { useFloatAlertStore } from '@/stores/FloatAlert'
+
 export default {
   props: {
     modalShow: Boolean,
@@ -91,24 +93,22 @@ export default {
           package_type_name: this.packageTypeName
         })
       this.isLoading = true
+      const { showFloatAlert } = useFloatAlertStore()
       const response = await requestWithBearer('package-type', method, params)
       if (response.success) {
         this.isLoading = false
         method === 'POST' ? (this.packageTypeName = '') : ''
         this.$emit('close')
         this.$emit('reload')
-        this.$emit('alert', {
-          type: 'berhasil',
-          message: `menyimpan data tipe paket ${response.data.data.package_type_name}!`
-        })
+        showFloatAlert(
+          `menyimpan data tipe paket ${response.data.data.package_type_name}!`,
+          'success'
+        )
       } else {
         this.isLoading = false
         method === 'POST' ? (this.packageTypeName = '') : ''
         this.$emit('close')
-        this.$emit('alert', {
-          type: 'gagal',
-          message: 'Maaf sepertinya sedang terjadi gangguan'
-        })
+        showFloatAlert('Maaf sepertinya sedang terjadi gangguan', 'error')
       }
     }
   },

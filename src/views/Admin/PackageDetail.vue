@@ -9,7 +9,17 @@
     </div>
     <section class="w-full grid grid-cols-1 lg:grid-cols-2 gap-10">
       <div class="relative overflow-x-auto sm:rounded-lg">
-        <h2 class="font-medium text-lg mb-2 text-gray-500">Detail Paket</h2>
+        <div class="flex justify-between items-center px-1 py-1">
+          <h2 class="font-medium text-lg mb-2 text-gray-500">Detail Paket</h2>
+          <div class="flex gap-2">
+            <PrimaryButton type="button" size="small" @click="toggleModal"
+              >Edit Paket</PrimaryButton
+            >
+            <SecondaryButton type="button" size="small" @click="toggleModalDelete"
+              >Hapus Paket</SecondaryButton
+            >
+          </div>
+        </div>
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <tbody>
             <DetailTableRow title="Tipe Akses"> {{ package.access_type }} </DetailTableRow>
@@ -151,6 +161,26 @@
       </div>
     </section>
   </main>
+
+  <Modal title="Edit Paket" :modalShow="modalShow" @close="toggleModal">
+    <ModalEditPackage @close="toggleModal" @loadData="loadData" :dataToEdit="package" />
+  </Modal>
+
+  <Modal
+    title="Hapus Paket"
+    size="extraSmall"
+    :modalShow="modalDeleteShow"
+    @close="toggleModalDelete"
+  >
+    <ModalDeletePackage
+      :itemName="package.package_name"
+      :dataToDelete="package"
+      :pushTo="'PackageAdmin'"
+      url="package"
+      @close="toggleModalDelete"
+    ></ModalDeletePackage
+  ></Modal>
+
   <Loader v-if="isLoading" />
   <Disturb v-if="!isLoading && error" @reload="loadData" />
 </template>
@@ -160,16 +190,29 @@ import requestWithBearer from '@/composables/API/RequestWithBearer'
 import Loader from '@/components/Loader/Spinner.vue'
 import Disturb from '@/components/Error/Disturb.vue'
 import DetailTableRow from '@/components/Table/DetailTableRow.vue'
+import Modal from '@/components/Modals/Base/Modal.vue'
+import ModalDeletePackage from '@/components/Modals/DeletePackage.vue'
+import ModalEditPackage from '@/components/Modals/EditPackage.vue'
+import PrimaryButton from '@/components/Buttons/PrimaryButton.vue'
+import SecondaryButton from '@/components/Buttons/SecondaryButton.vue'
+
 export default {
   name: 'PackageDetailAdmin',
   props: ['id'],
   components: {
+    Modal,
+    ModalEditPackage,
     Loader,
     Disturb,
-    DetailTableRow
+    DetailTableRow,
+    PrimaryButton,
+    SecondaryButton,
+    ModalDeletePackage
   },
   data: () => {
     return {
+      modalShow: false,
+      modalDeleteShow: false,
       package: [],
       isLoading: true,
       error: false,
@@ -218,6 +261,12 @@ export default {
       const date = new Date(dateString)
       const formattedDate = date.toLocaleDateString('id-ID', options)
       return formattedDate.replace(/,/, '')
+    },
+    toggleModal() {
+      this.modalShow = !this.modalShow
+    },
+    toggleModalDelete() {
+      this.modalDeleteShow = !this.modalDeleteShow
     }
   },
   mounted() {

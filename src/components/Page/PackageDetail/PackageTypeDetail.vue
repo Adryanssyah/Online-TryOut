@@ -20,7 +20,6 @@
       :packageTypeId="id"
       @deleteSub="deleteSub"
       @openModalDelete="toggleModalDeleteShow"
-      @alert="toggleAlert"
     />
     <div class="w-full flex justify-center py-5" :key="0">
       <button
@@ -35,25 +34,27 @@
     </div>
   </TransitionGroup>
 
-  <ModalDelete
-    :title="packageTypeDetailNameToDelete"
-    :packageData="packageTypeDetailIdToDelete"
+  <Modal
+    title="Hapus Sub Tipe Paket"
+    size="extraSmall"
     :modalShow="modalDeleteShow"
-    :pushTo="'PackageTypeDetail'"
-    :url="'package-type-detail'"
-    :index="packageTypeDetailIndexToDelete"
     @close="toggleModalDeleteShow"
-    @alert="toggleAlert"
-    @delete="deleteSub"
-  />
-  <Teleport to="body">
-    <floatAlert @toggleAlert="toggleAlert" :floatAlert="floatAlert" />
-  </Teleport>
+  >
+    <ModalDeletePackage
+      :itemName="packageTypeDetailNameToDelete"
+      :dataToDelete="packageTypeDetailIdToDelete"
+      :pushTo="'PackageTypeDetail'"
+      :url="'package-type-detail'"
+      :index="packageTypeDetailIndexToDelete"
+      @close="toggleModalDeleteShow"
+      @delete="deleteSub"
+    ></ModalDeletePackage
+  ></Modal>
 </template>
 <script>
 import PackageDetailForms from '@/components/Page/PackageDetail/PackageDetailForm.vue'
-import ModalDelete from '@/components/Modals/ModalDelete.vue'
-import floatAlert from '@/components/Alerts/Float.vue'
+import Modal from '@/components/Modals/Base/Modal.vue'
+import ModalDeletePackage from '@/components/Modals/DeletePackage.vue'
 export default {
   props: {
     id: { type: Number },
@@ -66,11 +67,6 @@ export default {
   data() {
     return {
       modalDeleteShow: false,
-      floatAlert: {
-        visible: false,
-        message: '',
-        type: ''
-      },
       packageTypeDetailNameToDelete: '',
       packageTypeDetailIdToDelete: '',
       packageTypeDetailIndexToDelete: null
@@ -78,8 +74,8 @@ export default {
   },
   components: {
     PackageDetailForms,
-    ModalDelete,
-    floatAlert
+    Modal,
+    ModalDeletePackage
   },
   methods: {
     addSub() {
@@ -96,11 +92,6 @@ export default {
       this.packageTypeDetailNameToDelete = name
       this.modalDeleteShow = !this.modalDeleteShow
       this.packageTypeDetailIndexToDelete = index
-    },
-    toggleAlert({ type, message }) {
-      this.floatAlert.visible = !this.floatAlert.visible
-      this.floatAlert.message = message
-      this.floatAlert.type = type
     }
   },
   mounted() {

@@ -6,55 +6,41 @@
   </h1>
 
   <div class="mb-2 flex w-full justify-end flex-col lg:flex-row gap-5">
-    <button
-      type="button"
-      @click="toggleModalAddPackageShow"
-      class="items-center px-3 py-2 text-sm font-medium text-center text-white bg-yellow-500 rounded-lg hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800"
-    >
-      Tambah
-    </button>
+    <PrimaryButton type="button" size="small" @click="toggleModal">Tambah</PrimaryButton>
   </div>
 
-  <PackageList />
+  <PackageList ref="getPackageList" />
 
-  <ModalAddPackage
-    :title="'Tambah Paket'"
-    :modalShow="modalPackageTypeShow"
-    @close="toggleModalAddPackageShow"
-    @alert="toggleAlert"
-  />
-  <Teleport to="body">
-    <floatAlert @toggleAlert="toggleAlert" :floatAlert="floatAlert" />
-  </Teleport>
+  <Modal title="Tambah Paket" size="large" :modalShow="modalShow" @close="toggleModal">
+    <ModalAddPackage @close="toggleModal" @loadData="loadData" />
+  </Modal>
 </template>
+
 <script>
+import Modal from '@/components/Modals/Base/Modal.vue'
 import ModalAddPackage from '@/components/Modals/AddPackage.vue'
-import floatAlert from '@/components/Alerts/Float.vue'
 import PackageList from '@/components/Page/Package/PackageList.vue'
+import PrimaryButton from '@/components/Buttons/PrimaryButton.vue'
+
 export default {
   data() {
     return {
-      modalPackageTypeShow: false,
-      floatAlert: {
-        visible: false,
-        message: '',
-        type: ''
-      }
+      modalShow: false
     }
   },
   components: {
     ModalAddPackage,
-    floatAlert,
-    PackageList
+    PackageList,
+    Modal,
+    PrimaryButton
   },
   methods: {
-    toggleModalAddPackageShow() {
-      this.modalPackageTypeShow = !this.modalPackageTypeShow
+    toggleModal() {
+      this.modalShow = !this.modalShow
     },
-    toggleAlert({ type, message }) {
-      this.floatAlert.visible = !this.floatAlert.visible
-      this.floatAlert.message = message
-      this.floatAlert.type = type
+    loadData() {
+      const pacakgeListComponent = this.$refs.getPackageList
+      pacakgeListComponent.getPackage()
     }
   }
 }

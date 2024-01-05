@@ -29,38 +29,40 @@
     :modalShow="modalPackageTypeShow"
     @close="toggleModalPackageShow"
     @reload="loadData"
-    @alert="toggleAlert"
   />
-  <ModalDelete
+
+  <Modal
     v-if="!isLoading"
-    :title="packageTypeName"
-    :packageData="packageData"
+    title="Hapus Sub Tipe Paket"
+    size="extraSmall"
     :modalShow="modalDeleteShow"
-    :pushTo="'AddPackageType'"
-    :url="'package-type'"
     @close="toggleModalDeleteShow"
-    @alert="toggleAlert"
-  />
-  <Teleport to="body">
-    <floatAlert @toggleAlert="toggleAlert" :floatAlert="floatAlert" />
-  </Teleport>
+  >
+    <ModalDeletePackage
+      :itemName="packageTypeName"
+      :dataToDelete="packageData"
+      :pushTo="'AddPackageType'"
+      :url="'package-type'"
+      @close="toggleModalDeleteShow"
+    ></ModalDeletePackage
+  ></Modal>
 
   <Disturb v-if="!isLoading && error" @reload="loadData" />
 </template>
 <script>
 import PackageTypeDetail from '@/components/Page/PackageDetail/PackageTypeDetail.vue'
 import ModalPackageType from '@/components/Modals/PackageTypeModal.vue'
-import ModalDelete from '@/components/Modals/ModalDelete.vue'
+import Modal from '@/components/Modals/Base/Modal.vue'
+import ModalDeletePackage from '@/components/Modals/DeletePackage.vue'
 import requestWithBearer from '@/composables/API/RequestWithBearer'
-import floatAlert from '@/components/Alerts/Float.vue'
 import Loader from '@/components/Loader/Spinner.vue'
 import Disturb from '@/components/Error/Disturb.vue'
 export default {
   props: ['id'],
   components: {
     ModalPackageType,
-    floatAlert,
-    ModalDelete,
+    Modal,
+    ModalDeletePackage,
     PackageTypeDetail,
     Loader,
     Disturb
@@ -72,22 +74,12 @@ export default {
       isLoading: true,
       packageData: {},
       modalPackageTypeShow: false,
-      floatAlert: {
-        visible: false,
-        message: '',
-        type: ''
-      },
       packageTypeName: null,
       packageTypeDetail: null,
       error: false
     }
   },
   methods: {
-    toggleAlert({ type, message }) {
-      this.floatAlert.visible = !this.floatAlert.visible
-      this.floatAlert.message = message
-      this.floatAlert.type = type
-    },
     toggleModalPackageShow() {
       this.modalPackageTypeShow = !this.modalPackageTypeShow
     },
