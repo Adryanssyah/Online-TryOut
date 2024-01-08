@@ -9,7 +9,7 @@
     </div>
     <section class="w-full grid grid-cols-1 lg:grid-cols-2 gap-10">
       <div class="relative overflow-x-auto sm:rounded-lg">
-        <div class="flex justify-between items-center px-1 py-1">
+        <div class="flex justify-between items-center px-1 py-2">
           <h2 class="font-medium text-lg mb-2 text-gray-500">Detail Paket</h2>
           <div class="flex gap-2">
             <PrimaryButton type="button" size="small" @click="toggleModal"

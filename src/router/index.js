@@ -1,19 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import landingPage from '@/views/landingPage.vue'
-import Login from '@/views/Login.vue'
-import Regis from '@/views/Regis.vue'
-import Dashboard from '@/views/Dashboard.vue'
-import PackageList from '@/views/PackageList.vue'
-import Profile from '@/views/Profile.vue'
-import Exam from '@/views/Exam.vue'
-//
-import AddPackageType from '@/views/Admin/AddPackageType.vue'
-import PackageTypeDetail from '@/views/Admin/PackageTypeDetail.vue'
-import PackageAdmin from '@/views/Admin/Package.vue'
-import PackageDetailAdmin from '@/views/Admin/PackageDetail.vue'
 
 import { useUserStore } from '@/stores/User'
 
+import sessionCheck from '@/composables/Auth/sessionCheck'
 const router = createRouter({
   scrollBehavior(to, from, savedPosition) {
     return { top: 0 }
@@ -23,7 +12,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'landingPage',
-      component: landingPage,
+      component: () => import('@/views/landingPage.vue'),
       meta: {
         title: 'Try Out Online - CPNS PPPK SNBT'
       }
@@ -31,7 +20,7 @@ const router = createRouter({
     {
       path: '/login',
       name: 'Login',
-      component: Login,
+      component: () => import('@/views/Login.vue'),
       meta: {
         title: 'Login - Try Out Online CPNS PPPK SNBT',
         auth: false,
@@ -41,7 +30,7 @@ const router = createRouter({
     {
       path: '/regis',
       name: 'Regis',
-      component: Regis,
+      component: () => import('@/views/Regis.vue'),
       meta: {
         title: 'Daftar - Try Out Online CPNS PPPK SNBT',
         auth: false,
@@ -51,7 +40,7 @@ const router = createRouter({
     {
       path: '/pilih-paket',
       name: 'PackageList',
-      component: PackageList,
+      component: () => import('@/views/PackageList.vue'),
       meta: {
         title: 'Pilih Paket - Try Out Online CPNS PPPK SNBT',
         auth: true
@@ -60,7 +49,7 @@ const router = createRouter({
     {
       path: '/dashboard',
       name: 'Dashboard',
-      component: Dashboard,
+      component: () => import('@/views/Dashboard.vue'),
       meta: {
         title: 'Dashboard - Try Out Online CPNS PPPK SNBT',
         auth: true
@@ -69,7 +58,7 @@ const router = createRouter({
     {
       path: '/profil',
       name: 'Profile',
-      component: Profile,
+      component: () => import('@/views/Profile.vue'),
       meta: {
         title: 'Profile Pengguna',
         auth: true
@@ -78,7 +67,7 @@ const router = createRouter({
     {
       path: '/ujian',
       name: 'Exam',
-      component: Exam,
+      component: () => import('@/views/Exam.vue'),
       meta: {
         title: 'Ujian',
         auth: true
@@ -87,7 +76,7 @@ const router = createRouter({
     {
       path: '/tipe-paket',
       name: 'AddPackageType',
-      component: AddPackageType,
+      component: () => import('@/views/Admin/AddPackageType.vue'),
       meta: {
         title: 'Tipe Paket',
         auth: true
@@ -96,7 +85,7 @@ const router = createRouter({
     {
       path: '/tipe-paket/detail/:id',
       name: 'PackageTypeDetail',
-      component: PackageTypeDetail,
+      component: () => import('@/views/Admin/PackageTypeDetail.vue'),
       meta: {
         title: 'Detail Tipe Paket',
         auth: true
@@ -106,7 +95,7 @@ const router = createRouter({
     {
       path: '/paket-tryout',
       name: 'PackageAdmin',
-      component: PackageAdmin,
+      component: () => import('@/views/Admin/Package.vue'),
       meta: {
         title: 'Paket Try Out',
         auth: true
@@ -115,7 +104,7 @@ const router = createRouter({
     {
       path: '/paket-tryout/detail/:id',
       name: 'PackageDetailAdmin',
-      component: PackageDetailAdmin,
+      component: () => import('@/views/Admin/PackageDetail.vue'),
       meta: {
         title: 'Detail Paket',
         auth: true
@@ -127,6 +116,11 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const userStore = useUserStore()
+  const { check } = sessionCheck()
+
+  if (!userStore.initialized) {
+    await check()
+  }
 
   if (to.meta.auth) {
     if (userStore.isAuthenticated) {
@@ -142,7 +136,7 @@ router.beforeEach(async (to, from, next) => {
     if (!userStore.isAuthenticated) {
       next()
     } else {
-      next(from)
+      next({ name: 'Dashboard' })
     }
   }
 
