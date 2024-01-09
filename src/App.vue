@@ -62,9 +62,17 @@ export default {
 
     const initialized = computed(() => userStore.initialized)
 
-    watch(initialized, (newValue) => {
-      if (newValue) {
+    if (initialized.value === true) {
+      loading.value = false
+    }
+
+    watch(initialized, (newValue, oldValue) => {
+      if (newValue && userStore.isAuthenticated === true) {
         loading.value = false
+      } else if (newValue && userStore.isAuthenticated === false) {
+        setTimeout(() => {
+          loading.value = false
+        }, 1000)
       }
     })
 
